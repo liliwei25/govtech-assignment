@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'govtech'
+      MYSQL_USER: 'govtech'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db-volumne:/var/lib/mysql
+
+volumes:
+  db-volumne:
