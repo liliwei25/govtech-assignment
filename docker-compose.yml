@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8
     environment:
       MYSQL_DATABASE: 'govtech'
       MYSQL_USER: 'govtech'
@@ -12,7 +12,7 @@ services:
     expose:
       - '3306'
     volumes:
-      - db-volumne:/var/lib/mysql
+      - db-volume:/var/lib/mysql
 
 volumes:
-  db-volumne:
+  db-volume:
