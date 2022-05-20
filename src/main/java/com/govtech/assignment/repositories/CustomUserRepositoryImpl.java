@@ -18,7 +18,10 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
                 "SELECT u FROM User u WHERE u.salary BETWEEN ?1 AND ?2",
                 em,
                 User.class);
-        TypedQuery<User> query = queryBuilder.setOrderBy(request.getSortKey())
+        if (request.getSort() != null) {
+            queryBuilder.setOrderBy(request.getSort().toString());
+        }
+        TypedQuery<User> query = queryBuilder
                 .setParam(1, request.getMin())
                 .setParam(2, request.getMax())
                 .setOffset(request.getOffset())
