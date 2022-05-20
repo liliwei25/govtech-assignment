@@ -23,5 +23,9 @@ public class UserGetRequest implements Serializable {
     private Integer limit;
 
     private SortKey sort;
+
+    public String getSortKey() {
+        return sort == null ? null : sort.toString();
+    }
 }
 
