@@ -10,12 +10,13 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class CustomUserRepositoryImpl implements CustomUserRepository {
+    public static final String QUERIES_FIND_WITH_SALARY_BETWEEN = "SELECT u FROM User u WHERE u.salary BETWEEN ?1 AND ?2";
     @PersistenceContext
     EntityManager em;
 
     public List<User> findUsersFromRequest(UserGetRequest request) {
         QueryBuilder<User> queryBuilder = new QueryBuilder<>(
-                "SELECT u FROM User u WHERE u.salary BETWEEN ?1 AND ?2",
+                QUERIES_FIND_WITH_SALARY_BETWEEN,
                 em,
                 User.class);
         if (request.getSort() != null) {

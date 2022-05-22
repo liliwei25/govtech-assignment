@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QueryBuilder<T> {
+    public static final String ERRORS_NULL_QUERY = "Base query should not be null or empty";
+    public static final String KEYWORDS_ORDER_BY = " ORDER BY ";
     private final StringBuilder queryString;
     private final EntityManager em;
     private final Class<T> objectClass;
@@ -17,7 +19,7 @@ public class QueryBuilder<T> {
 
     public QueryBuilder(String baseQuery, EntityManager em, Class<T> objectClass) {
         if (baseQuery == null || baseQuery.length() == 0) {
-            throw new IllegalArgumentException("Base query should not be null or empty");
+            throw new IllegalArgumentException(ERRORS_NULL_QUERY);
         }
         this.queryString = new StringBuilder(baseQuery);
         this.em = em;
@@ -54,7 +56,7 @@ public class QueryBuilder<T> {
 
     public TypedQuery<T> build() {
         if (this.orderBy != null) {
-            this.queryString.append(" ORDER BY ").append(this.orderBy);
+            this.queryString.append(KEYWORDS_ORDER_BY).append(this.orderBy);
         }
         TypedQuery<T> query = em.createQuery(this.queryString.toString(), this.objectClass);
         this.params.forEach(query::setParameter);
