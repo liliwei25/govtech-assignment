@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
@@ -44,15 +43,13 @@ public class UserController {
     public @ResponseBody
     DeferredResult<ResponseEntity<UserUploadResponse>> uploadUsers(UserUploadRequest request) {
         DeferredResult<ResponseEntity<UserUploadResponse>> output = new DeferredResult<>();
-        logger.info("Processing upload request...");
         ForkJoinPool.commonPool().submit(() -> {
             UserUploadResponse response = new UserUploadResponse();
             try {
                 this.userService.saveAllUsersFromRequest(request);
                 response.setSuccess(RequestSuccess.SUCCESS);
                 output.setResult(ResponseEntity.status(HttpStatus.OK).body(response));
-                logger.info("Upload request processed successfully");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 response.setError(e.getMessage());
                 output.setResult(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response));
                 logger.error("Failed to process upload request: " + e.getMessage());
